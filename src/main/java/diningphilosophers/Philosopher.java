@@ -1,6 +1,8 @@
 package diningphilosophers;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Philosopher
@@ -22,7 +24,19 @@ public class Philosopher
 
     @Override
     public void run() {
-
+        while (running) {
+            try {
+                think();
+                myLeftStick.take();                
+                myRightStick.take();                
+                eat();                
+                myLeftStick.release();
+                myRightStick.release();
+               
+            } catch (InterruptedException ex) {
+                Logger.getLogger("Table").log(Level.SEVERE, "{0} Interrupted", this.getName());
+            }
+        }
     }
 
     // Permet d'interrompre le philosophe "proprement" :
